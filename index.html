@@ -1,51 +1,57 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 <head>
-  <title>Time Scale Point Data</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+
+  <title>IOT - Tábor</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.cs.min.js"></script>
-
-  <link id="bs-css" href="https://netdna.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" />
-
-
-  <script src="./Chart.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
-  <script src="./chartjs-plugin-zoom.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
   <style>
-  canvas {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-  }
+    * { margin: 0; padding: 0; }
   </style>
 </head>
-
 <body>
-  <script src="./code.js"></script>
 
-  <canvas id="canvas"></canvas>
-  <!-- <form class="form-inline">
-    <div class="form-group">
-      <div class="input-daterange input-group" id="datepicker">
-        <input type="text" class="input-sm form-control" name="start"
-          value="2019-11-30" />
-        <span class="input-group-addon">do</span>
-        <input type="text" class="input-sm form-control" name="end"
-          value="2019-12-01" />
+  <div>
+    <div id="mapid" style="width:100%; height:100%; position:fixed"></div>
+  </div>
 
-      </div>
-    </div>
+<script>
 
-    <button type="button" class="btn btn-primary">OK</button>
-  </form> -->
+  var map = L.map('mapid', {
+    center: L.latLng(49.4100908, 14.6805764),
+    zoom: 14
+  })
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map)
+
+  axios.get(`http://data.mutabor.cz:2300/devices/`)
+    .then(res => {
+      res.data.map(i => {
+        const link = `lineargraph.html?app_id=${i.app_id}&dev_id=${i.dev_id}`
+        const content = `
+          <h2>
+            ${i.app_id}: <a href="${link}"/>${i.dev_id}</a>
+          </h2>
+          <div>${i.description}</div>
+          <div>Data: <a href="${link}"/>ZDE</a></div>
+        `
+        L.marker([i.latitude, i.longitude]).addTo(map)
+          .bindPopup(content).openPopup()
+      })
+    })
+    .catch(err => alert(err))
+
+</script>
+
 </body>
-
 </html>

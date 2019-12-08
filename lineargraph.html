@@ -1,0 +1,51 @@
+
+<!doctype html>
+<html>
+
+<head>
+  <title>Time Scale Point Data</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.cs.min.js"></script>
+
+  <link id="bs-css" href="https://netdna.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" />
+
+
+  <script src="./Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+  <script src="./chartjs-plugin-zoom.js"></script>
+
+  <style>
+  canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+
+<body>
+  <script src="./lineargraph.js"></script>
+
+  <canvas id="canvas"></canvas>
+  <!-- <form class="form-inline">
+    <div class="form-group">
+      <div class="input-daterange input-group" id="datepicker">
+        <input type="text" class="input-sm form-control" name="start"
+          value="2019-11-30" />
+        <span class="input-group-addon">do</span>
+        <input type="text" class="input-sm form-control" name="end"
+          value="2019-12-01" />
+
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary">OK</button>
+  </form> -->
+</body>
+
+</html>
