@@ -75,7 +75,12 @@ var config = {
         },
         zoom: {
           enabled: true,
-          mode: 'xy'
+          mode: 'xy',
+          onZoomComplete: function ({ chart }) {
+            const min = new Date(chart.scales['x-axis-0'].min)
+            const max = new Date(chart.scales['x-axis-0'].max)
+            _load(min, max)
+          }
         }
       }
     }
@@ -104,5 +109,8 @@ function _load (start, end) {
 window.onload = function () {
   var ctx = document.getElementById('canvas').getContext('2d')
   window.myLine = new Chart(ctx, config)
-  _load('2019-11-30T16:32:52.200Z', '2019-12-01T20:32:52.200Z')
+  const now = moment()
+  const beforeWeek = moment().subtract(7, 'days')
+  _load(beforeWeek.utc(), now.utc())
+  // _load('2019-11-30T16:32:52.200Z', '2019-12-01T20:32:52.200Z')
 }
